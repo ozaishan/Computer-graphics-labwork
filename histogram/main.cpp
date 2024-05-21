@@ -1,10 +1,9 @@
-
 #include <cmath>
-#include<windows.h>
-		#include <GL/glu.h>
-		#include <GL/glut.h>
+#include <windows.h>
+#include <GL/glu.h>
+#include <GL/glut.h>
 
-int frequencies[] = { 10, 20, 30, 40,50};
+int frequencies[] = {50, 60, 10, 20, 50};
 
 // Function to draw a line using DDA algorithm
 void draw_line(float x1, float y1, float x2, float y2) {
@@ -17,7 +16,6 @@ void draw_line(float x1, float y1, float x2, float y2) {
     float y = y1;
 
     glBegin(GL_POINTS);
-    glLineWidth(10.0f);
     for (int i = 0; i < int(steps); ++i) {
         glVertex2f(x, y);
         x += x_increment;
@@ -30,9 +28,26 @@ void draw_line(float x1, float y1, float x2, float y2) {
 void draw_histogram() {
     glClear(GL_COLOR_BUFFER_BIT);
     glColor3f(1.0f, 1.0f, 1.0f);
-glLineWidth(5.0f);
-    for (int i = 0; i < 5; ++i) {
-        draw_line(i * 20, 0, i * 20, frequencies[i] * 10);
+
+    // Calculate the width of each bar
+    float barWidth = 500.0f / sizeof(frequencies);
+
+    // Loop through each frequency and draw the outline of the histogram bar
+    for (int i = 0; i < sizeof(frequencies) / sizeof(frequencies[0]); ++i) {
+        // Calculate the height of the bar based on frequency
+        float barHeight = frequencies[i] * 10.0f;
+
+        // Calculate the position of the current bar
+        float x1 = i * barWidth;
+        float y1 = 0.0f;
+        float x2 = x1 + barWidth;
+        float y2 = barHeight;
+
+        // Draw the outline of the histogram bar using DDA algorithm
+        draw_line(x1, y1, x1, y2);  // Left vertical line
+        draw_line(x1, y2, x2, y2);  // Top horizontal line
+        draw_line(x2, y2, x2, y1);  // Right vertical line
+        draw_line(x2, y1, x1, y1);  // Bottom horizontal line
     }
 
     glFlush();
@@ -50,7 +65,7 @@ void reshape(int width, int height) {
 int main(int argc, char *argv[]) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
-    glutInitWindowSize(500, 700);
+    glutInitWindowSize(500, 800);
     glutCreateWindow("Histogram");
     glutDisplayFunc(draw_histogram);
     glutReshapeFunc(reshape);

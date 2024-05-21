@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1713789707 source:c:\users\nitro\desktop\computergraphics\histogram\main.cpp
+1713931528 source:c:\users\nitro\desktop\computergraphics\histogram\main.cpp
 	<cmath>
 	<windows.h>
 	<GL/glu.h>

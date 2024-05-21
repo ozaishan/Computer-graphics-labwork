@@ -5,7 +5,7 @@
 
 void Draw()
 {
-    GLfloat x1=10,y1=10,x2=200,y2=100;
+    GLfloat x1=100,y1=100,x2=500,y2=100;
     GLfloat M,p,dx,dy,x,y,t;
     glClear(GL_COLOR_BUFFER_BIT);
 
